@@ -8,26 +8,29 @@
 </head>
 <body>
     <nav>
-    <a href="about.html">About Me</a>
-    <a href="contact.html">Contact Details</a>
+        <a href="about.html">About Me</a>
+        <a href="contact.html">Contact Details</a>
     </nav>
+
     <h1>Hello, I'm Sai Prajwal Martha</h1>
     <p>Current Course : CSCI 6343 - Cloud Development, Spring 2026</p>
+
+    <h2>Visitors from Database</h2>
+    <ul id="visitor-list"></ul>
+
+    <script>
+        fetch('/.netlify/functions/get-visitors')
+            .then(res => res.json())
+            .then(data => {
+                const list = document.getElementById('visitor-list');
+
+                data.forEach(visitor => {
+                    const li = document.createElement('li');
+                    li.textContent = visitor.name + " - " + visitor.visited_at;
+                    list.appendChild(li);
+                });
+            })
+            .catch(err => console.log(err));
+    </script>
 </body>
 </html>
-<h2>Visitors from Database</h2>
-<ul id="visitor-list"></ul>
-<script>
-fetch('/.netlify/functions/get-visitors')
-  .then(res => res.json())
-  .then(data => {
-    const list = document.getElementById('visitor-list');
-
-    data.forEach(visitor => {
-      const li = document.createElement('li');
-      li.textContent = visitor.name + " - " + visitor.visited_at;
-      list.appendChild(li);
-    });
-  })
-  .catch(err => console.log(err));
-</script>         
